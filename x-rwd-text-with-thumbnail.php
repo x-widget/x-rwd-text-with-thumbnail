@@ -1,0 +1,129 @@
+<?php
+if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
+include_once(G5_LIB_PATH.'/thumbnail.lib.php');
+
+widget_css();
+
+
+$icon_url = widget_data_url( $widget_config['code'], 'icon' );
+
+$file_headers = @get_headers($icon_url);
+
+if($file_headers[0] == 'HTTP/1.1 404 Not Found') {
+    $icon_url = null;
+}
+
+if( $widget_config['forum1'] ) $bo_table = $widget_config['forum1'];
+else $bo_table = bo_table(1);
+
+if( $widget_config['no'] ) $limit = $widget_config['no'];
+else $limit = 5;
+
+$list = g::posts( array(
+			"bo_table" 	=>	$bo_table,
+			"limit"		=>	$limit,
+			"select"	=>	"idx,domain,bo_table,wr_id,wr_parent,wr_is_comment,wr_comment,ca_name,wr_datetime,wr_hit,wr_good,wr_nogood,wr_name,mb_id,wr_subject,wr_content"
+				)
+		);	
+		
+$title_query = "SELECT bo_subject FROM ".$g5['board_table']." WHERE bo_table = '".$bo_table."'";
+$title = cut_str(db::result( $title_query ),10,"...");
+?>
+
+<div class="skin-update x-rwd-text-with-thumbnail">
+    <div class="title">
+	<?if( $icon_url ) {?>
+		<img class='icon' src='<?=$icon_url?>'>
+	<?}?>
+		<a href='<?=g::url_forum($bo_table)?>'><?=$title?></a>
+		
+		<span class='more-button'><a href='<?=g::url_forum($bo_table)?>'>자세히 ></a></span>
+		<div style='clear:right;'></div>
+	</div>
+    <table>
+	
+    <?php
+		$trs = array();
+		$count_post = 0;
+		for ($i=0; $i<count($list); $i++) {		
+			//if ( $count_post >= $options['no'] ) break;
+			$imgsrc = get_list_thumbnail( $bo_table , $list[$i]['wr_id'], 40, 35 );
+			if( $imgsrc ) $img = "<img src='".$imgsrc['src']."'/>";			
+			else $img = "<img src='".x::url()."/widget/".$widget_config['name']."/img/no-image.png'/>";			
+			$count_post ++;
+			ob_start();
+	?>
+	<tr valign='top'>
+		
+            <?php		
+			
+			
+			echo "<td width='40'><div class='photo'><a href='".$list[$i]['url']."'>$img</a></div></td>";
+			        
+            echo "<td width='100%'>
+					<div class='subject'><a href='".$list[$i]['url']."'>".cut_str($list[$i]['subject'], 15, '...')."</a></div>
+					<div class='contents_wrapper'><a href='".$list[$i]['url']."'>".cut_str(strip_tags($list[$i]['wr_content']), 30, '...')."</a></div>
+			
+				</td>";
+			
+			if( !$list[$i]['wr_comment'] ) $comment_count = "<div class='comment_count no-comment'>0</div>";
+			else $comment_count = "<div class='comment_count'>".strip_tags($list[$i]['wr_comment'])."</div>";
+			$date_and_time = explode(" ",$list[$i]['wr_datetime']);
+			if( $date_and_time[0] == date("Y-m-d") ) $post_date = $date_and_time[1];
+			else $post_date = $date_and_time[0];
+
+			echo "<td width='80'><div class='comment-time'>".$comment_count."<div class='time'>".$post_date."</div></div></td>";
+             ?>	
+	</tr>	
+    <?php
+			$trs[] = ob_get_clean();
+		}
+		echo implode( "<tr><td colspan='10'><div class='breaker'></div></td></tr>", $trs );
+		?>
+    <?php if(count($list) == 0) { //게시물이 없을 때  ?>
+		<tr valign='top'>
+			<td><div class='photo'><a href='http://www.philgo.net/bbs/board.php?bo_table=help&wr_id=5'><img src='<?=$latest_skin_url?>/img/no-image.png'/></a></div></td>
+			 <td width='80%'>
+				<div class='subject'><a href='http://www.philgo.net/bbs/board.php?bo_table=help&wr_id=5'>사이트 만들기 안내</a></div>
+				<div class='contents_wrapper' style='margin-bottom: 8px;' ><a href='http://www.philgo.net/bbs/board.php?bo_table=help&wr_id=5'>사이트 만들기 안내</a></div>
+			 </td>	
+			<td><div class='comment-time'><div class='comment_count'>10</div><div class='time'><?=date('H:i', time())?></div></div></td>
+		</tr valign='top'>
+		<tr valign='top'>
+			<td><div class='photo'><a href='http://www.philgo.net/bbs/board.php?bo_table=help&wr_id=4'><img src='<?=$latest_skin_url?>/img/no-image.png'/></a></div></td>
+			 <td width='80%'>
+				<div class='subject'><a href='http://www.philgo.net/bbs/board.php?bo_table=help&wr_id=4'>블로그 만들기</a></div>
+				<div class='contents_wrapper' style='margin-bottom: 8px;'><a href='http://www.philgo.net/bbs/board.php?bo_table=help&wr_id=4'>블로그 만들기</a></div>
+			</td>	
+			<td><div class='comment-time'>0<br><span class='time'><?=date('H:i', time())?></span></div></td>
+		</tr>
+		<tr valign='top'>
+			<td><div class='photo'><a href='http://www.philgo.net/bbs/board.php?bo_table=help&wr_id=3'><img src='<?=$latest_skin_url?>/img/no-image.png'/></a></div></td>
+			 <td width='80%'>
+				<div class='subject'><a href='http://www.philgo.net/bbs/board.php?bo_table=help&wr_id=3'>커뮤니티 사이트 만들기</a></div>
+				<div class='contents_wrapper' style='margin-bottom: 8px;'><a href='http://www.philgo.net/bbs/board.php?bo_table=help&wr_id=3'>커뮤니티 사이트 만들기</a></div>
+			</td>	
+			<td><div class='comment-time'>0<br><span class='time'><?=date('H:i', time())?></span></div></td>
+		</tr>
+		<tr valign='top'>
+			<td><div class='photo'><a href='http://www.philgo.net/bbs/board.php?bo_table=help&wr_id=2'><img src='<?=$latest_skin_url?>/img/no-image.png'/></a></div></td>
+			 <td width='80%'>
+				<div class='subject'><a href='http://www.philgo.net/bbs/board.php?bo_table=help&wr_id=2'>여행사 사이트 만들기</a></div>
+				<div class='contents_wrapper' style='margin-bottom: 8px;'><a href='http://www.philgo.net/bbs/board.php?bo_table=help&wr_id=2'>여행사 사이트 만들기</a></div>
+			</td>	
+			<td><div class='comment-time'><div class='comment_count'>10</div><span class='time'><?=date('H:i', time())?></span></div></td>
+		</tr>
+		<tr valign='top'>
+			<td><div class='photo'><a href='http://www.philgo.net/bbs/board.php?bo_table=help&wr_id=2'><img src='<?=$latest_skin_url?>/img/no-image.png'/></a></div></td>
+			 <td width='80%'>
+				<div class='subject'><a href='<?=url_site_config()?>'>사이트 설정하기</a></div>
+				<div class='contents_wrapper' style='margin-bottom: 8px;'><a href='<?=url_site_config()?>'>사이트 설정 바로가기</a></div>
+			</td>	
+			<td><div class='comment-time'><div class='comment_count'>10</div><span class='time'><?=date('H:i', time())?></span></div></td>
+		</tr>
+    <?php
+			
+		}				
+	?>
+    </table>    
+</div>

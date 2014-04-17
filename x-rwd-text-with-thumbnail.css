@@ -1,0 +1,125 @@
+.x-rwd-text-with-thumbnail {
+	border:1px solid #bbbbbb;
+	background: #ffffff;	
+}
+
+.x-rwd-text-with-thumbnail > .title {
+	font-weight:bold;
+	padding: 0.5em 0.7em 0.4em 0.7em;
+	height: 1.4em;
+	border-bottom:1px solid #bbbbbb;
+	
+}
+
+.x-rwd-text-with-thumbnail > .title img{
+	position:relative;
+	top:-2px;
+	margin-right:5px;
+	width:12px;
+	height:12px;
+}
+
+.x-rwd-text-with-thumbnail > .title .more-button {
+	float: right;
+	font-weight: normal;	
+}
+.x-rwd-text-with-thumbnail > .title .more-button a {
+	color:#8f8f8f;
+	font-size: 9pt
+}
+
+.x-rwd-text-with-thumbnail .comment-time{
+	float:right;
+	text-align: right;	
+	font-size: 11px;
+	width:80px;
+}
+
+.x-rwd-text-with-thumbnail  .photo {
+	width:30%;	
+} 
+
+.x-rwd-text-with-thumbnail .x-rwd-content {
+
+}
+
+
+.x-rwd-text-with-thumbnail .comment-time .time{
+	margin-left:0.25em;
+}
+
+.x-rwd-text-with-thumbnail a{
+	text-decoration:none;
+}
+
+.x-rwd-text-with-thumbnail .comment_count.no-comment{
+	color:#808080;
+}
+
+.x-rwd-text-with-thumbnail .comment_count{
+	color: #ff9c00;
+}
+
+/******************/
+.x-rwd-text-with-thumbnail .subject{
+	margin-top: 0;
+	margin-left: 0.75em;
+	margin-bottom: 0.3em;
+	height:1.2em;	
+	overflow:hidden;
+	font-weight: bold;
+	word-break:break-all;
+	color: #000000;
+	line-height: 1.2em;
+	overflow: hidden;
+}
+.x-rwd-text-with-thumbnail .subject a {
+	color: #494949;
+}
+
+.x-rwd-text-with-thumbnail .contents_wrapper {
+	margin-left: 0.75em;
+	height: 1.2em;
+	line-height: 1.2em;
+	overflow:hidden;	
+	word-break:break-all;
+	color: #808080;
+	overflow: hidden;
+}
+
+.x-rwd-text-with-thumbnail .contents_wrapper a{
+	color: #808080;
+}	
+.x-rwd-text-with-thumbnail table {
+	margin-top: 0.5em;
+}
+
+.x-rwd-text-with-thumbnail  td{
+	padding-top: 0.30em;
+}
+
+.x-rwd-text-with-thumbnail table{
+	padding:0 0.7em 0.7em 0.7em;	
+}
+
+
+.x-rwd-text-with-thumbnail .breaker {
+	margin: 0.2em 0.3em;
+}
+@media all and ( min-width: 1px ) { 
+	.x-rwd-text-with-thumbnail {
+		margin-top: 8px;
+		margin-right: 2px;
+	}
+}
+@media all and ( min-width: 400px ) { 
+	.x-rwd-text-with-thumbnail {
+		margin-top: 0;
+	}
+}
+
+@media all and ( min-width: 500px ) { 
+	.x-rwd-text-with-thumbnail {
+		margin-right: 0px;
+	}
+}

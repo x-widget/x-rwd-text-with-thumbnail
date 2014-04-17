@@ -1,14 +1,14 @@
 <?xml version="1.0"?>
 <config>
-	<id>widget x-rwd-gallery</id>
+	<id>widget x-rwd-text-with-thumbnail</id>
 	<type>widget</type>
 	<category>
 		<main>post</main>
 		<sub>latest</sub>
 	</category>
 	<name>
-		<en>Post Latest With Images</en>
-		<ko>Post Latest With Images</ko>
+		<en>Mobile Community Text with Thumbnail</en>
+		<ko>Mobile Community Text with Thumbnail</ko>
 	</name>
 	<version>0.1</version>
 	<author>JaeHo Song</author>
@@ -16,11 +16,11 @@
 	<homepage>http://jaehosong.com</homepage>
 	<demo>http://philgo.net</demo>
 	<short>
-		<en>Displays latest post with images</en>
-		<ko>Displays latest post with images</ko>
+		<en>Displays latest post with image thumbnails</en>
+		<ko>Displays latest post with image thumbnails</ko>
 	</short>
 	<detail>
-		<en>Displays latest post with images in one row</en>
-		<ko>Displays latest post with images in one row</ko>
+		<en>Displays latest post with image thumbnails, comment, and date of post</en>
+		<ko>Displays latest post with image thumbnails, comment, and date of post</ko>
 	</detail>
 </config>

@@ -14,7 +14,7 @@ if($file_headers[0] == 'HTTP/1.1 404 Not Found') {
 }
 
 if( $widget_config['forum1'] ) $_bo_table = $widget_config['forum1'];
-else $_bo_table = bo_table(1);
+else $_bo_table = $widget_config['default_forum_id'];
 
 if( $widget_config['no'] ) $limit = $widget_config['no'];
 else $limit = 5;
@@ -45,9 +45,14 @@ $title = cut_str(db::result( $title_query ),10,"...");
 		$count_post = 0;
 		for ($i=0; $i<count($list); $i++) {		
 			//if ( $count_post >= $options['no'] ) break;
-			$imgsrc = get_list_thumbnail( $_bo_table , $list[$i]['wr_id'], 40, 35 );
-			if( $imgsrc ) $img = "<img src='".$imgsrc['src']."'/>";			
-			else $img = "<img src='".x::url()."/widget/".$widget_config['name']."/img/no-image.png'/>";			
+			$_wr_id = $list[$i]['wr_id'];
+			$imgsrc = x::post_thumbnail( $_bo_table , $_wr_id, 40, 35 );
+			if( empty($imgsrc) ) {
+				$_wr_content = db::result("SELECT wr_content FROM $g5[write_prefix]$_bo_table WHERE wr_id='$_wr_id'");
+				$image_from_tag = g::thumbnail_from_image_tag( $_wr_content, $_bo_table, 40, 35);
+				if ( empty($image_from_tag) ) $img = "<img src='$widget_config[url]/img/no-image.png'/>";
+				else $img = "<img src='$image_from_tag'/>";
+			} else $img = "<img src='".$imgsrc['src']."'/>";			
 			$count_post ++;
 			ob_start();
 	?>
@@ -80,7 +85,7 @@ $title = cut_str(db::result( $title_query ),10,"...");
 		?>
     <?php if(count($list) == 0) { //게시물이 없을 때  ?>
 		<tr valign='top'>
-			<td><div class='photo'><a href='http://www.philgo.net/bbs/board.php?bo_table=help&wr_id=5'><img src='<?=$latest_skin_url?>/img/no-image.png'/></a></div></td>
+			<td><div class='photo'><a href='http://www.philgo.net/bbs/board.php?bo_table=help&wr_id=5'><img src='<?=$widget_config['url']?>/img/no-image.png'/></a></div></td>
 			 <td width='80%'>
 				<div class='subject'><a href='http://www.philgo.net/bbs/board.php?bo_table=help&wr_id=5'>사이트 만들기 안내</a></div>
 				<div class='contents_wrapper' style='margin-bottom: 8px;' ><a href='http://www.philgo.net/bbs/board.php?bo_table=help&wr_id=5'>사이트 만들기 안내</a></div>
@@ -88,7 +93,7 @@ $title = cut_str(db::result( $title_query ),10,"...");
 			<td><div class='comment-time'><div class='comment_count'>10</div><div class='time'><?=date('H:i', time())?></div></div></td>
 		</tr valign='top'>
 		<tr valign='top'>
-			<td><div class='photo'><a href='http://www.philgo.net/bbs/board.php?bo_table=help&wr_id=4'><img src='<?=$latest_skin_url?>/img/no-image.png'/></a></div></td>
+			<td><div class='photo'><a href='http://www.philgo.net/bbs/board.php?bo_table=help&wr_id=4'><img src='<?=$widget_config['url']?>/img/no-image.png'/></a></div></td>
 			 <td width='80%'>
 				<div class='subject'><a href='http://www.philgo.net/bbs/board.php?bo_table=help&wr_id=4'>블로그 만들기</a></div>
 				<div class='contents_wrapper' style='margin-bottom: 8px;'><a href='http://www.philgo.net/bbs/board.php?bo_table=help&wr_id=4'>블로그 만들기</a></div>
@@ -96,7 +101,7 @@ $title = cut_str(db::result( $title_query ),10,"...");
 			<td><div class='comment-time'>0<br><span class='time'><?=date('H:i', time())?></span></div></td>
 		</tr>
 		<tr valign='top'>
-			<td><div class='photo'><a href='http://www.philgo.net/bbs/board.php?bo_table=help&wr_id=3'><img src='<?=$latest_skin_url?>/img/no-image.png'/></a></div></td>
+			<td><div class='photo'><a href='http://www.philgo.net/bbs/board.php?bo_table=help&wr_id=3'><img src='<?=$widget_config['url']?>/img/no-image.png'/></a></div></td>
 			 <td width='80%'>
 				<div class='subject'><a href='http://www.philgo.net/bbs/board.php?bo_table=help&wr_id=3'>커뮤니티 사이트 만들기</a></div>
 				<div class='contents_wrapper' style='margin-bottom: 8px;'><a href='http://www.philgo.net/bbs/board.php?bo_table=help&wr_id=3'>커뮤니티 사이트 만들기</a></div>
@@ -104,7 +109,7 @@ $title = cut_str(db::result( $title_query ),10,"...");
 			<td><div class='comment-time'>0<br><span class='time'><?=date('H:i', time())?></span></div></td>
 		</tr>
 		<tr valign='top'>
-			<td><div class='photo'><a href='http://www.philgo.net/bbs/board.php?bo_table=help&wr_id=2'><img src='<?=$latest_skin_url?>/img/no-image.png'/></a></div></td>
+			<td><div class='photo'><a href='http://www.philgo.net/bbs/board.php?bo_table=help&wr_id=2'><img src='<?=$widget_config['url']?>/img/no-image.png'/></a></div></td>
 			 <td width='80%'>
 				<div class='subject'><a href='http://www.philgo.net/bbs/board.php?bo_table=help&wr_id=2'>여행사 사이트 만들기</a></div>
 				<div class='contents_wrapper' style='margin-bottom: 8px;'><a href='http://www.philgo.net/bbs/board.php?bo_table=help&wr_id=2'>여행사 사이트 만들기</a></div>
@@ -112,7 +117,7 @@ $title = cut_str(db::result( $title_query ),10,"...");
 			<td><div class='comment-time'><div class='comment_count'>10</div><span class='time'><?=date('H:i', time())?></span></div></td>
 		</tr>
 		<tr valign='top'>
-			<td><div class='photo'><a href='http://www.philgo.net/bbs/board.php?bo_table=help&wr_id=2'><img src='<?=$latest_skin_url?>/img/no-image.png'/></a></div></td>
+			<td><div class='photo'><a href='http://www.philgo.net/bbs/board.php?bo_table=help&wr_id=2'><img src='<?=$widget_config['url']?>/img/no-image.png'/></a></div></td>
 			 <td width='80%'>
 				<div class='subject'><a href='<?=url_site_config()?>'>사이트 설정하기</a></div>
 				<div class='contents_wrapper' style='margin-bottom: 8px;'><a href='<?=url_site_config()?>'>사이트 설정 바로가기</a></div>

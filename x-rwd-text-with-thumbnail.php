@@ -10,7 +10,7 @@ $icon_url = widget_data_url( $widget_config['code'], 'icon' );
 $file_headers = @get_headers($icon_url);
 
 if($file_headers[0] == 'HTTP/1.1 404 Not Found') {
-    $icon_url = null;
+    $icon_url = x::url()."/widget/".$widget_config['name']."/img/icon.png";
 }
 
 if( $widget_config['forum1'] ) $_bo_table = $widget_config['forum1'];
@@ -31,10 +31,8 @@ $title = cut_str(db::result( $title_query ),10,"...");
 ?>
 
 <div class="skin-update x-rwd-text-with-thumbnail">
-    <div class="title">
-	<?if( $icon_url ) {?>
-		<img class='icon' src='<?=$icon_url?>'>
-	<?}?>
+    <div class="title">	
+		<img class='icon' src='<?=$icon_url?>'>	
 		<a href='<?=g::url_forum($_bo_table)?>'><?=$title?></a>
 		
 		<span class='more-button'><a href='<?=g::url_forum($_bo_table)?>'>자세히 ></a></span>

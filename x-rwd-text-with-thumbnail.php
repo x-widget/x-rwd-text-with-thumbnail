@@ -13,20 +13,20 @@ if($file_headers[0] == 'HTTP/1.1 404 Not Found') {
     $icon_url = null;
 }
 
-if( $widget_config['forum1'] ) $bo_table = $widget_config['forum1'];
-else $bo_table = bo_table(1);
+if( $widget_config['forum1'] ) $_bo_table = $widget_config['forum1'];
+else $_bo_table = bo_table(1);
 
 if( $widget_config['no'] ) $limit = $widget_config['no'];
 else $limit = 5;
 
 $list = g::posts( array(
-			"bo_table" 	=>	$bo_table,
+			"bo_table" 	=>	$_bo_table,
 			"limit"		=>	$limit,
 			"select"	=>	"idx,domain,bo_table,wr_id,wr_parent,wr_is_comment,wr_comment,ca_name,wr_datetime,wr_hit,wr_good,wr_nogood,wr_name,mb_id,wr_subject,wr_content"
 				)
 		);	
 		
-$title_query = "SELECT bo_subject FROM ".$g5['board_table']." WHERE bo_table = '".$bo_table."'";
+$title_query = "SELECT bo_subject FROM ".$g5['board_table']." WHERE bo_table = '".$_bo_table."'";
 $title = cut_str(db::result( $title_query ),10,"...");
 ?>
 
@@ -35,9 +35,9 @@ $title = cut_str(db::result( $title_query ),10,"...");
 	<?if( $icon_url ) {?>
 		<img class='icon' src='<?=$icon_url?>'>
 	<?}?>
-		<a href='<?=g::url_forum($bo_table)?>'><?=$title?></a>
+		<a href='<?=g::url_forum($_bo_table)?>'><?=$title?></a>
 		
-		<span class='more-button'><a href='<?=g::url_forum($bo_table)?>'>자세히 ></a></span>
+		<span class='more-button'><a href='<?=g::url_forum($_bo_table)?>'>자세히 ></a></span>
 		<div style='clear:right;'></div>
 	</div>
     <table>
@@ -47,7 +47,7 @@ $title = cut_str(db::result( $title_query ),10,"...");
 		$count_post = 0;
 		for ($i=0; $i<count($list); $i++) {		
 			//if ( $count_post >= $options['no'] ) break;
-			$imgsrc = get_list_thumbnail( $bo_table , $list[$i]['wr_id'], 40, 35 );
+			$imgsrc = get_list_thumbnail( $_bo_table , $list[$i]['wr_id'], 40, 35 );
 			if( $imgsrc ) $img = "<img src='".$imgsrc['src']."'/>";			
 			else $img = "<img src='".x::url()."/widget/".$widget_config['name']."/img/no-image.png'/>";			
 			$count_post ++;

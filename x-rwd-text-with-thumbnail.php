@@ -91,49 +91,34 @@ $title = $widget_config['title'];
 		}
 		echo implode( "<tr><td colspan='10'><div class='breaker'></div></td></tr>", $trs );
 		?>
-    <?php if(count($list) == 0) { //게시물이 없을 때  ?>
-		<tr valign='top'>
-			<td><div class='photo'><a href='http://www.philgo.net/bbs/board.php?bo_table=help&wr_id=5'><img src='<?=$widget_config['url']?>/img/no-image.png'/></a></div></td>
-			 <td width='80%'>
-				<div class='subject'><a href='http://www.philgo.net/bbs/board.php?bo_table=help&wr_id=5'>사이트 만들기 안내</a></div>
-				<div class='contents_wrapper' style='margin-bottom: 8px;' ><a href='http://www.philgo.net/bbs/board.php?bo_table=help&wr_id=5'>사이트 만들기 안내</a></div>
-			 </td>	
-			<td><div class='comment-time'><div class='comment_count'>10</div><div class='time'><?=date('H:i', time())?></div></div></td>
-		</tr valign='top'>
-		<tr valign='top'>
-			<td><div class='photo'><a href='http://www.philgo.net/bbs/board.php?bo_table=help&wr_id=4'><img src='<?=$widget_config['url']?>/img/no-image.png'/></a></div></td>
-			 <td width='80%'>
-				<div class='subject'><a href='http://www.philgo.net/bbs/board.php?bo_table=help&wr_id=4'>블로그 만들기</a></div>
-				<div class='contents_wrapper' style='margin-bottom: 8px;'><a href='http://www.philgo.net/bbs/board.php?bo_table=help&wr_id=4'>블로그 만들기</a></div>
-			</td>	
-			<td><div class='comment-time'>0<br><span class='time'><?=date('H:i', time())?></span></div></td>
-		</tr>
-		<tr valign='top'>
-			<td><div class='photo'><a href='http://www.philgo.net/bbs/board.php?bo_table=help&wr_id=3'><img src='<?=$widget_config['url']?>/img/no-image.png'/></a></div></td>
-			 <td width='80%'>
-				<div class='subject'><a href='http://www.philgo.net/bbs/board.php?bo_table=help&wr_id=3'>커뮤니티 사이트 만들기</a></div>
-				<div class='contents_wrapper' style='margin-bottom: 8px;'><a href='http://www.philgo.net/bbs/board.php?bo_table=help&wr_id=3'>커뮤니티 사이트 만들기</a></div>
-			</td>	
-			<td><div class='comment-time'>0<br><span class='time'><?=date('H:i', time())?></span></div></td>
-		</tr>
-		<tr valign='top'>
-			<td><div class='photo'><a href='http://www.philgo.net/bbs/board.php?bo_table=help&wr_id=2'><img src='<?=$widget_config['url']?>/img/no-image.png'/></a></div></td>
-			 <td width='80%'>
-				<div class='subject'><a href='http://www.philgo.net/bbs/board.php?bo_table=help&wr_id=2'>여행사 사이트 만들기</a></div>
-				<div class='contents_wrapper' style='margin-bottom: 8px;'><a href='http://www.philgo.net/bbs/board.php?bo_table=help&wr_id=2'>여행사 사이트 만들기</a></div>
-			</td>	
-			<td><div class='comment-time'><div class='comment_count'>10</div><span class='time'><?=date('H:i', time())?></span></div></td>
-		</tr>
-		<tr valign='top'>
-			<td><div class='photo'><a href='http://www.philgo.net/bbs/board.php?bo_table=help&wr_id=2'><img src='<?=$widget_config['url']?>/img/no-image.png'/></a></div></td>
-			 <td width='80%'>
-				<div class='subject'><a href='<?=url_site_config()?>'>사이트 설정하기</a></div>
-				<div class='contents_wrapper' style='margin-bottom: 8px;'><a href='<?=url_site_config()?>'>사이트 설정 바로가기</a></div>
-			</td>	
-			<td><div class='comment-time'><div class='comment_count'>10</div><span class='time'><?=date('H:i', time())?></span></div></td>
-		</tr>
-    <?php
+    <?php if(count($list) == 0) { //게시물이 없을 때	
+	$img = $widget_config['url']."/img/no-image.png";
+		for( $i = 0; $i < 5; $i++ ){				
+		ob_start();		
+	?>
+			<tr valign='top'>
+		
+            <?php		
 			
+			
+			echo "<td width='40'><div class='photo'><a href='".$list[$i]['url']."'><img src='$img'/></a></div></td>";
+			        
+            echo "<td width='100%'>
+					<div class='subject'>Default Subject #$i</div>
+					<div class='contents_wrapper'>Default Content #$i</div>			
+				</td>";
+			
+			$comment_count = "<div class='comment_count no-comment'>0</div>";
+			
+			$post_date = "20XX-XX-XX";
+
+			echo "<td width='80'><div class='comment-time'>".$comment_count."<div class='time'>".$post_date."</div></div></td>";
+             ?>	
+	</tr>	
+    <?php
+		$trs[] = ob_get_clean();
+			}
+			echo implode( "<tr><td colspan='10'><div class='breaker'></div></td></tr>", $trs );
 		}				
 	?>
     </table>    

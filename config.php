@@ -1,5 +1,6 @@
 <?php	
 	include widget_config_form('forum');
+	include widget_config_form('title');
 	widget_config_extra_begin();
 	include widget_config_form('text', array(
 		'name'				=> 'no',

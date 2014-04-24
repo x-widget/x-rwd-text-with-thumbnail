@@ -26,8 +26,16 @@ $list = g::posts( array(
 				)
 		);	
 		
-$title_query = "SELECT bo_subject FROM ".$g5['board_table']." WHERE bo_table = '".$_bo_table."'";
-$title = cut_str(db::result( $title_query ),10,"...");
+		
+$title = $widget_config['title'];
+	if ( empty( $title ) ) {
+		$cfg = g::config( $_bo_table, 'bo_subject' );
+		$title = cut_str( $cfg['bo_subject'],10,"...");
+	}
+
+	if ( empty($title) ) {
+		$title = "No title";
+	}
 ?>
 
 <div class="skin-update x-rwd-text-with-thumbnail">
